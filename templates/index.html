@@ -1,12 +1,21 @@
 <html>
-<head></head>
-<body>
+        <head>
+                <h1>Welcome to Eight-Inlets Bouldering Gym!</h1>
+        </head>
 
-<form method="POST" action="/getname">
-        <h3>Welcome to GYM</h3>
-                  <input name="keyword" type="text" id="inputNumber"placeholder="Existing Member Check-in" required autofocus>
-                  <button type="submit">Submit</button>
-</form>
+        <body>
+                <form method="POST" action="/new_member">
+                        <button type="submit">New Member Waiver Form</button>
+                </form>
 
-</body>
+                <form method="POST" action="/returning_member">
+                        <button type="submit">Returning Member Check-In</button>
+                </form>
+
+                <form method="POST" action="/staff_portal">
+                        <button type="submit">Staff Portal</button>
+                </form>
+        </body>
+
 </html>
+

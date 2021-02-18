@@ -1,9 +1,11 @@
 SaaSy Cloud Group 34
 Group Project for CSCI 4145
 
+To run app locally: 
+`flask run`
 
-INSTRUCTIOS FOR LOCAL RUNNING
+If that doesn't work, try: 
+`python -m flask run`
 
-docker build -t webapp .
-
-docker run -d -p 5000:5000 webapp
+To run on an externally visible server: 
+`flask run --host=0.0.0.0`
