@@ -7,5 +7,3 @@ To run app locally:
 If that doesn't work, try: 
 `python -m flask run`
 
-To run on an externally visible server: 
-`flask run --host=0.0.0.0`
