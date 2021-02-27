@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, redirect
 
 application = app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -19,6 +19,9 @@ def returning_member():
     return render_template('returning_member.html')
 
 # Route for staff members 
-@app.route('/staff_portal', methods=['POST'])
+@app.route('/staff_portal', methods=['GET'])
 def staff_portal():
-    return render_template('staff_portal.html')
+    #url = "http://www.google.com"
+    url = "http://0.0.0.0:5001/"
+    return redirect(url)
+    #return render_template('staff_portal.html')
