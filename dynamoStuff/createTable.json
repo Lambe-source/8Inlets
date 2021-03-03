@@ -1,0 +1,54 @@
+{
+	"Table": {
+	    "AttributeDefinitions": [
+	        {
+	            "AttributeName": "Id",
+	            "AttributeType": "N"
+	        },
+	        {
+	            "AttributeName": "waiver",
+	            "AttributeType": "B"
+	        },
+	        {
+	            "AttributeName": "attendance",
+	            "AttributeType": "B"
+	        }
+            ],
+	    "TableName": "Members",
+	    "KeySchema": [
+	        {
+	            "AttributeName": "Id",
+	            "KeyType": "HASH"
+	        },
+	        {
+	            "AttributeName": "waiver",
+	            "KeyType": "RANGE"
+	        }
+	    ],
+	    "ProvisionedThroughput": {											                "ReadCapacityUnits": 2,
+	        "WriteCapacityUnits": 2]
+	    },
+	    "GlobalSecondaryIndexes": [											                {
+	        "IndexName": "PersonalData",
+	        "KeySchema": [
+	            {
+	                "AttributeName": "Id",
+	                "KeyType": "HASH"
+	            },
+		    {
+		        "AttributeName": "attendance",
+		        "KeyType": "RANGE"
+		    }
+		],
+	        "Projection": {
+	            "ProjectionType": "ALL"
+	        },
+	        "IndexStatus": "ACTIVE",
+	        "ProvisionedThroughput": {
+	            "ReadCapacityUnits": 2,
+	            "WriteCapacityUnits": 2
+	        }
+	      }
+          ]
+      }
+}

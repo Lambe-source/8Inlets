@@ -1,0 +1,2 @@
+aws dynamodb put-item --table-name Members --item '{ "Id": {"N": "<NUMBERS>"}, "waiver": {"B": "True"}, "attendance"
+: {"B": "True"}, "Name": {"S": "<NAME>"}, "PhoneNo": {"N": "<NUMBERS>"}, "CreditCard": {"N": "<NUMBERS>"}, "EmContact": {"S": "<NAME> <NUMBERS>"} }' --endpoint-url http://localhost:8000
