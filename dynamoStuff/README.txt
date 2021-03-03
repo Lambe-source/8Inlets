@@ -5,7 +5,7 @@ IMAGE:
 https://hub.docker.com/r/amazon/dynamodb-local
 IMAGE PULL COMMAND:
 docker pull amazon/dynamodb-local
-Ran this via DockerDesktop 
+Ran this via DockerDesktop OR from the command line with docker run amazon/dynamodb-local 
 
 Take the json file and run this
 aws dynamodb create-table --cli-input-json file://local-db-members.json --endpoint-url http://localhost:8000
