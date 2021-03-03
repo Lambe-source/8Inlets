@@ -9,7 +9,7 @@ Ran this via DockerDesktop OR from the command line with:
 docker run amazon/dynamodb-local 
 
 Take the json file and run this:
-aws dynamodb create-table --cli-input-json file://local-db-members.json --endpoint-url http://localhost:8000
+aws dynamodb create-table --cli-input-json file://createTable.json --endpoint-url http://localhost:8000
 
 Check if the table is there:
 aws dynamodb list-tables --endpoint-url http://localhost:8000
