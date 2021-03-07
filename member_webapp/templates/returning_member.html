@@ -5,7 +5,20 @@
         </head>
 
         <body>
-            <h3>Check-In Coming Soon...</h3>
+            {% if message %}
+                <p>{{ message }}</p>
+                {% if message == "User not found!" %}
+                    <p>Please sign the <a href="/new_member">new member waiver<\a></p>
+                {% endif %}
+            {% endif %}
+
+            <form method="POST" action="/verify">
+                <input name="name" type="text" placeholder="Name" required autofocus><br><br>
+
+                <input name="phone_number" type="number" placeholder="Phone Number" required autofocus><br><br>
+
+                <button type="submit">Submit</button>
+            </form>
         </body>
 
 </html>
