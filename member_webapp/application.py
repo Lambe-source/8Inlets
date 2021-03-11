@@ -55,4 +55,4 @@ def get_member_data():
         r = 'Success! Your member ID is:'+ member_id_number+'\n Please keep this on hand.'
         return render_template('new_member.html', msg=r)
     r= ' '
-    return render_template('new_member.html')
+    return render_template('new_member.html', msg=r)
