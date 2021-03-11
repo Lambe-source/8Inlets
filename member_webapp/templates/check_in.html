@@ -1,0 +1,27 @@
+<html>
+        <head>
+            <title>Check In</title>
+        </head>
+
+        <body>
+            {% if login_message or check_in_message %}
+                <h1>Hello Returning Members!</h1>
+                {% if login_message %}
+                    <p style="color:green">{{ login_message }}</p>
+                {% elif check_in_message %}
+                    <p> {{ check_in_message }}</p>
+                {% endif %}
+                <h2>Please Check In:</h2>
+                <form method="POST" action="/returning_member/check_in/{{ user_id }}">
+                    <label><input name="check-in" type="checkbox"> I am here!</label>
+                    <br><br>
+                    <button type="submit">Check In</button>
+                </form>
+            {% else %}
+                <p style="color:green">{{ success }}</p>
+                <a href="/"><button>Return to Home Page</button></a>
+            {% endif %}
+        </body>
+
+</html>
+

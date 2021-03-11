@@ -1,22 +1,18 @@
 <html>
         <head>
-                <h1>Hello Returning Members!</h1>
-                <h2>Please Check-In:</h2>
+            <title>Returning Members Page</title>
         </head>
 
         <body>
-            {% if message %}
-                <p>{{ message }}</p>
-                {% if message == "User not found!" %}
-                    <p>Please sign the <a href="/new_member">new member waiver<\a></p>
-                {% endif %}
+            <h1>Hello Returning Members!</h1>
+            <h2>Please Sign-In:</h2>
+            {% if error %}
+                <p style="color:red">{{ error }}</p>
+                <p>Please sign the <a href="/new_member">new member waiver</a></p>
             {% endif %}
-
-            <form method="POST" action="/verify">
-                <input name="name" type="text" placeholder="Name" required autofocus><br><br>
-
-                <input name="phone_number" type="number" placeholder="Phone Number" required autofocus><br><br>
-
+            <form method="POST" action="/returning_member/log_in">
+                <input name="user_id" type="text" placeholder="Id" required autofocus>
+                <br><br>
                 <button type="submit">Submit</button>
             </form>
         </body>
