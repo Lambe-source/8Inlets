@@ -1,7 +1,7 @@
 import os
 import uuid
 import boto3
-from flask import Flask, jsonify, render_template, url_for, redirect, request
+from flask import Flask, jsonify, render_template, redirect, request
 from boto3.dynamodb.conditions import Key
 
 application = app = Flask(__name__)
@@ -28,7 +28,6 @@ def returning_member():
 def verify_user():
     if request.method == 'POST':
         user_id = request.form['user_id']
-        user_id = int(user_id)
 
         table = dynamodb.Table('Members')
         response = table.query(
@@ -45,7 +44,6 @@ def verify_user():
 @app.route('/returning_member/check_in/<user_id>', methods=['POST'])
 def attendance(user_id):
     if request.method == 'POST':
-        user_id = int(user_id)
         checked = request.form.get('check-in')
         if checked:
             table = dynamodb.Table('Members')
