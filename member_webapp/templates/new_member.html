@@ -1,12 +1,29 @@
 <html>
         <head>
-                <h1>Hello New Members!</h1>
-                <h2>Please enter your information:</h2>
+		<h1>Hello New Members!</h1>
+			<h2>	{{ msg }}</h2>
+                <h3>Please enter your information:</h3>
         </head>
 
         <body>
-            <form method="POST" action="/get_new_member_data">
-                <input name="first_name" type="text" placeholder="First Name" required autofocus><br><br>
+            <form method="POST" action="/get_member_data">
+		    <h2 class="text-center"><strong>Create</strong> an account.</h2>
+		    <div class="form-group"><input class="form-control" type="Name" name="Name" placeholder="Name"></div>
+		    <div class="form-group"><input class="form-control" type="PhoneNo" name="PhoneNo" placeholder="Phone Number"></div>
+		    <div class="form-group"><input class="form-control" type="CreditCard" name="CreditCard" placeholder="Credit Card"></div>
+		    <div class="form-group"><input class="form-control" type="EmContact" name="EmContact" placeholder="Emergency Contact"></div>
+
+
+		    <div class="form-group">
+			    <div class="form-check">
+				    <label class="form-check-label"><input class="form-put-input" type="checkbox">I agree to the license terms.</label>
+			    </div>
+		    </div>
+		    <div class="form-group">
+			    <input type="submit" name="submit" value="Sign up" class="btn btn-primary btn-block" 
+			    			style="background-color:#aedc8a;cb(40,140,38);color:rgb(40,140,38);">
+		    </div>
+	<!--	    <input name="first_name" type="text" placeholder="First Name" required autofocus><br><br>
                       
                 <input name="last_name" type="text" placeholder="Last Name" required autofocus><br><br>
  
@@ -14,7 +31,7 @@
     
                 <input name="credit_number" type="text" placeholder="Credit Card Number" required autofocus><br><br>
           
-                <button type="submit">Submit</button>
+		<button type="submit">Submit</button>-->
             </form>
         
         </body>
