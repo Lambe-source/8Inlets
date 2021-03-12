@@ -1,13 +1,14 @@
 <html>
         <head>
             <title>Check In</title>
+            <link rel="stylesheet" href= "{{ url_for('static',filename='styles.css') }}">
         </head>
 
         <body>
             {% if login_message or check_in_message %}
-                <h1>Hello Returning Members!</h1>
+                <h1>Hello Returning Members!</h1><hr>
                 {% if login_message %}
-                    <p style="color:green">{{ login_message }}</p>
+                    <p class="positive">{{ login_message }}</p>
                 {% elif check_in_message %}
                     <p> {{ check_in_message }}</p>
                 {% endif %}
@@ -18,7 +19,8 @@
                     <button type="submit">Check In</button>
                 </form>
             {% else %}
-                <p style="color:green">{{ success }}</p>
+                <p class="positive">{{ success }}</p>
+                <br><br>
                 <a href="/"><button>Return to Home Page</button></a>
             {% endif %}
         </body>

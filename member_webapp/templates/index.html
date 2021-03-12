@@ -1,9 +1,11 @@
 <html>
         <head>
-                <h1>Welcome to Eight-Inlets Bouldering Gym!</h1>
+                <title>Home</title>
+                <link rel="stylesheet" href= "{{ url_for('static',filename='styles.css') }}">
         </head>
 
         <body>
+                <h1>Welcome to Eight-Inlets Bouldering Gym!</h1><hr>
                 <form method="POST" action="/new_member">
                         <button type="submit">New Member Waiver Form</button>
                 </form>
