@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <title>Staff Portal</title>
+        <link rel="stylesheet" href= "{{ url_for('static',filename='styles.css') }}">
+    </head>
+
+    <body>
+        <h1>Staff Portal</h1><hr>
+        <form method="POST" action="/onboarding">
+            <button type="submit">New Staff Onboarding Form</button>
+        </form>
+
+        <form method="POST" action="/member_signout">
+            <button type="submit">Check out Members</button>
+        </form>
+    </body>
+
+</html>
