@@ -7,9 +7,12 @@
     <body>
         <h1>Welcome back!</h1><hr>
         <h2>Please log in:</h2>
-
-        <h3>Login form coming soon...</h3>
+        {% if error %}
+            <p class="negative">{{ error }}</p>
+        {% endif %}
         <form method="POST" action="/staff_portal">
+            <input name="staff_id" type="text" placeholder="Id" required autofocus>
+            <br><br>
             <button type="submit">Log In</button>
         </form>
 

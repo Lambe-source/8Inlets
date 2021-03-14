@@ -6,6 +6,9 @@
 
     <body>
         <h1>Staff Portal</h1><hr>
+        {% if login_message %}
+            <p class="positive">{{ login_message }}</p>
+        {% endif %}
         <form method="POST" action="/onboarding">
             <button type="submit">New Staff Onboarding Form</button>
         </form>
