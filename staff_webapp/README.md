@@ -4,7 +4,7 @@ Group Project for CSCI 4145
 To run app locally: 
 `flask run --host=0.0.0.0 --port=5001`
 
-####DYNAMODB INSTRUCTIONS:
+#### DYNAMODB INSTRUCTIONS:
 
 * Log into your AWS Educate profile
     * Once you are in your Vocareum Work Bench, click **Account Details**
