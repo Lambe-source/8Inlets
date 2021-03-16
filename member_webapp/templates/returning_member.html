@@ -1,11 +1,20 @@
 <html>
         <head>
-		<h1>Hello Returning Members!</h1>
-                <h2>Please Check-In:</h2>
+            <title>Returning Members Page</title>
         </head>
 
         <body>
-            <h3>Check-In Coming Soon...</h3>
+            <h1>Hello Returning Members!</h1>
+            <h2>Please Sign-In:</h2>
+            {% if error %}
+                <p style="color:red">{{ error }}</p>
+                <p>Please sign the <a href="/new_member">new member waiver</a></p>
+            {% endif %}
+            <form method="POST" action="/returning_member/log_in">
+                <input name="user_id" type="text" placeholder="Id" required autofocus>
+                <br><br>
+                <button type="submit">Submit</button>
+            </form>
         </body>
 
 </html>
