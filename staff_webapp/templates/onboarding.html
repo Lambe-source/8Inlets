@@ -5,9 +5,26 @@
     </head>
 
     <body>
-        <h1>Onboarding</h1><hr>
+        <h1>Hello New Staff Members!</h1><hr>
+        {% if msg %}
+            <div class="positive">
+                <!--p with spaces from: https://stackoverflow.com/questions/12244057/any-way-to-add-a-new-line-from-a-string-with-the-n-character-in-flask-->
+                {% for para in msg %}
+                    <p>{{para}}</p>
+                {% endfor %}
+            </div>
+            <br><br>
+            <a href="/"><button>Return to Home Page</button></a>
+        {% else %}
+            <h3>Please enter your information:</h3>
+            <form class="new_member" method="POST" action="/get_staff_member_data">
+                <h2>Create an account.</h2>
 
-        <h3>Sign-up form coming soon...</h3>
+                <input name="Name" placeholder="Name"><br>
+                <input name="PhoneNo" placeholder="Phone Number"><br><br>
+                <button type="submit" name="submit">Sign up</button>
+            </form>
+        {% endif %}
     </body>
 
 </html>
