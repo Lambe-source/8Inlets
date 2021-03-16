@@ -1,15 +1,16 @@
 <html>
         <head>
             <title>Returning Members Page</title>
+            <link rel="stylesheet" href= "{{ url_for('static',filename='styles.css') }}">
         </head>
 
         <body>
-            <h1>Hello Returning Members!</h1>
-            <h2>Please Sign-In:</h2>
+            <h1>Hello Returning Members!</h1><hr>
             {% if error %}
-                <p style="color:red">{{ error }}</p>
+                <p class="negative">{{ error }}</p>
                 <p>Please sign the <a href="/new_member">new member waiver</a></p>
             {% endif %}
+            <h2>Please Sign-In:</h2>
             <form method="POST" action="/returning_member/log_in">
                 <input name="user_id" type="text" placeholder="Id" required autofocus>
                 <br><br>

@@ -4,7 +4,7 @@ import boto3
 from flask import Flask, jsonify, render_template, redirect, request
 from boto3.dynamodb.conditions import Key
 
-application = app = Flask(__name__)
+application = app = Flask(__name__, static_folder='./static')
 app.secret_key = os.urandom(24)
 
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
@@ -87,7 +87,7 @@ def get_member_data():
             'attendance': False
                     }
             )
-        r = 'Success! Your member ID is:'+ member_id_number+'\n Please keep this on hand.'
+        r = ["Success!", "Your member ID is:" + member_id_number, "Please keep this on hand."]
         return render_template('new_member.html', msg=r)
     r= ' '
     return render_template('new_member.html', msg=r)
