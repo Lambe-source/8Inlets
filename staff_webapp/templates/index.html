@@ -1,11 +1,14 @@
 <html>
         <head>
-                <h1>Welcome to the team!</h1>
-                <h2>Please create a staff account:</h2>
+                <title>Staff Portal</title>
+                <link rel="stylesheet" href= "{{ url_for('static',filename='styles.css') }}">
         </head>
 
         <body>
-            <h3>Form goes here...?</h3>
+                <h1>Welcome back, team!</h1><hr>
+                <form method="POST" action="/login">
+                        <button type="submit">Staff Login</button>
+                </form>
         </body>
 
 </html>

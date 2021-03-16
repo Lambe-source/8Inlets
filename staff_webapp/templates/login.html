@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>Staff Login Page</title>
+        <link rel="stylesheet" href= "{{ url_for('static',filename='styles.css') }}">
+    </head>
+
+    <body>
+        <h1>Welcome back!</h1><hr>
+        <h2>Please log in:</h2>
+        {% if error %}
+            <p class="negative">{{ error }}</p>
+        {% endif %}
+        <form method="POST" action="/staff_portal">
+            <input name="staff_id" type="text" placeholder="Id" required autofocus>
+            <br><br>
+            <button type="submit">Log In</button>
+        </form>
+
+    </body>
+
+</html>
