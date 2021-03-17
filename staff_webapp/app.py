@@ -1,5 +1,6 @@
 import os
 import boto3
+import uuid
 from flask import Flask, jsonify, render_template, redirect, request
 from boto3.dynamodb.conditions import Key
 
@@ -37,9 +38,29 @@ def verify_staff_login():
 # Route for new staff account creation
 @app.route('/onboarding', methods=['POST'])
 def onboard_redirect():
+
     return render_template('onboarding.html')
 
 # Route for signing out gym members
 @app.route('/member_signout', methods=['POST'])
 def signout_redirect():
     return render_template('signout_members.html')
+
+@app.route('/get_staff_member_data', methods=['GET', 'POST'])
+def get_staff_member_data():
+    if request.method == 'POST':
+        Name = request.form['Name']
+        PhoneNo = request.form['PhoneNo']
+        staff_member_id_number = str(uuid.uuid4())
+        table = dynamodb.Table('Staff')
+        table.put_item( 
+                Item={
+                    'Id': staff_member_id_number,
+                    'Name': Name,
+                    'PhoneNo': PhoneNo,
+                }
+            )
+        r = ["Success!", "Your staff ID is: " + staff_member_id_number, "Please keep this on hand."]
+        return render_template('onboarding.html', msg=r)
+    r= ' '
+    return render_template('onboarding.html', msg=r)

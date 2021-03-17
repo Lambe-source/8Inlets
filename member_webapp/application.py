@@ -61,11 +61,9 @@ def attendance(user_id):
 # Route for staff members 
 @app.route('/staff_portal', methods=['GET'])
 def staff_portal():
-    #url = "http://www.google.com"
     url = "http://0.0.0.0:5001/"
     return redirect(url)
-    #return render_template('staff_portal.html')
-
+    
 @app.route('/get_member_data', methods=['GET', 'POST'])
 def get_member_data():
     if request.method == 'POST':
@@ -75,7 +73,7 @@ def get_member_data():
         EmContact = request.form['EmContact']
         member_id_number = str(uuid.uuid4())
         table = dynamodb.Table('Members')
-        #member_id_number += table.item_count
+
         table.put_item( 
                 Item={
             'Id': member_id_number,
