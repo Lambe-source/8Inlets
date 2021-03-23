@@ -1,6 +1,7 @@
 import os
 import uuid
 import boto3
+import datetime
 from flask import Flask, jsonify, render_template, redirect, request
 from boto3.dynamodb.conditions import Key
 
@@ -50,7 +51,7 @@ def attendance(user_id):
             response = table.update_item(
                 Key={'Id': user_id},
                 UpdateExpression="set attendance=:t",
-                ExpressionAttributeValues={ ':t': True },
+                ExpressionAttributeValues={ ':t': 1 },
                 ReturnValues="UPDATED_NEW"
             )
             return render_template('check_in.html', success="Check in successful!")
@@ -82,10 +83,26 @@ def get_member_data():
             'CreditCard': CreditCard,
             'EmContact': EmContact,
             'waiver': True,
-            'attendance': False
+            'attendance': 0
                     }
             )
         r = ["Success!", "Your member ID is:" + member_id_number, "Please keep this on hand."]
         return render_template('new_member.html', msg=r)
     r= ' '
     return render_template('new_member.html', msg=r)
+
+# Route for getting updated capacity - could be done in home page and query each time
+@app.route('/capacity', methods=['GET'])
+def get_active():
+    gym_capacity = 10  # arbitrary capacity set for testing - small so that few users are needed to show changes
+
+    table = dynamodb.Table('Members')
+    response = table.query(
+        IndexName='AttendanceIndex',
+        KeyConditionExpression=Key('attendance').eq(1)
+    )
+    # datetime formatting: https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
+    time = datetime.datetime.now().strftime('%b %d, %Y %I:%M:%S %p')
+    capacity = response['Count'] / gym_capacity
+
+    return render_template('index.html', capacity=capacity, latest=time)
