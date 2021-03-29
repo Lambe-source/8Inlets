@@ -3,11 +3,25 @@ import uuid
 import boto3
 from flask import Flask, jsonify, render_template, redirect, request
 from boto3.dynamodb.conditions import Key
+import hashlib
+import json
 
 application = app = Flask(__name__, static_folder='./static')
 app.secret_key = os.urandom(24)
 
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
+
+# Create a Secrets Manager client
+session = boto3.session.Session()
+client = session.client(
+    service_name='secretsmanager',
+    region_name='us-east-1',
+)
+get_secret_value_response = client.get_secret_value(
+            SecretId="dev/hashing/key1"
+)
+salt = json.loads(get_secret_value_response.get('SecretString')).get('hash_key')
+
 
 @app.route('/', methods=['GET'])
 def home():
@@ -73,13 +87,17 @@ def get_member_data():
         EmContact = request.form['EmContact']
         member_id_number = str(uuid.uuid4())
         table = dynamodb.Table('Members')
+        
+        # Encrypt CreditCard Info
+        CreditCard = CreditCard + salt
+        h = hashlib.md5(CreditCard.encode())
 
         table.put_item( 
                 Item={
             'Id': member_id_number,
             'Name': Name,
             'PhoneNo': PhoneNo,
-            'CreditCard': CreditCard,
+            'CreditCard': str(h.hexdigest()),
             'EmContact': EmContact,
             'waiver': True,
             'attendance': False
