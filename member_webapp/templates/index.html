@@ -1,22 +1,45 @@
 <html>
         <head>
-                <title>Home</title>
-                <link rel="stylesheet" href= "{{ url_for('static',filename='styles.css') }}">
+            <title>Home</title>
+            <link rel="stylesheet" href= "{{ url_for('static',filename='styles.css') }}">
         </head>
 
         <body>
-                <h1>Welcome to Eight-Inlets Bouldering Gym!</h1><hr>
-                <form method="POST" action="/new_member">
-                        <button type="submit">New Member Waiver Form</button>
-                </form>
+            <h1>Welcome to Eight-Inlets Bouldering Gym!</h1><hr>
 
-                <form method="POST" action="/returning_member">
-                        <button type="submit">Returning Member Check-In</button>
-                </form>
+            <form method="POST" action="/new_member">
+                <button type="submit">New Member Waiver Form</button>
+            </form>
 
-                <form method="GET" action="/staff_portal">
-                        <button type="submit">Staff Portal</button>
-                </form>
+            <form method="POST" action="/returning_member">
+                <button type="submit">Returning Member Check-In</button>
+            </form>
+
+            <form method="GET" action="/staff_portal">
+                <button type="submit">Staff Portal</button>
+            </form>
+
+            <form method="GET" action="/capacity">
+                <button type="submit">Check Capacity</button>
+            </form>
+
+            <!-- is defined: https://jinja.palletsprojects.com/en/2.11.x/templates/#defined -->
+            <!-- needed since capacity can be 0, and in that case (if capacity) evaluates to false -->
+            {% if capacity is defined %}
+                <div class="capacity_container">
+                    <!-- svg progress ring based on this tutorial: https://css-tricks.com/building-progress-ring-quickly/ -->
+                    <svg height="225" width="225">
+                        <!-- source for data-cap for capacity use: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes-->
+                         <circle cx="112" cy="113" r="85" stroke="#CCCCCC" stroke-width="30" fill="transparent" />
+                        <circle id="cap" class="progress-ring__circle" data-cap="{{ capacity }}"
+                                cx="112" cy="112" r="85" stroke="#54A9FF" stroke-width="30" fill="transparent" />
+                    </svg>
+                    <!-- capacity to int from: https://jinja.palletsprojects.com/en/2.9.x/templates/#round-->
+                    <h2>The gym is at {{ (capacity * 100)|round|int }}% capacity.</h2>
+                    <p>Last capacity measure received: {{ latest }}</p>
+                </div>
+            {% endif %}
+            <script src="{{ url_for('static',filename='capacity.js') }}"></script>
         </body>
 
 </html>

@@ -75,3 +75,19 @@ input:hover {
     margin-top: 1rem;
     margin-bottom: 2rem;
 }
+
+/* svg progress ring based on https://css-tricks.com/building-progress-ring-quickly/ */
+.progress-ring__circle {
+  transition: 0.35s stroke-dashoffset;
+  /* axis compensation */
+  transform: rotate(270deg);
+  transform-origin: 50% 50%;
+}
+
+.capacity_container > svg {
+  margin-left: 95px;
+}
+
+.capacity_container > h2 {
+  margin-left: 45px;
+}
