@@ -5,10 +5,16 @@
     </head>
 
     <body>
-        <h1>Member Signout</h1><hr>
-
-        <h3>Sign-out form coming soon...</h3>
-
+        <h1>Member Signout</h1>
+        <h2>Enter Member ID:</h2>
+        <form method="POST" action="/sign_out">
+            <input name="user_id" type="text" placeholder="Id" required autofocus>
+            <br><br>
+            <button type="submit">Submit</button>
+        </form>
+        {% if user_not_found_error %}
+            <p class="negative">{{ user_not_found_error }}</p>
+        {% endif %}
     </body>
 
 </html>

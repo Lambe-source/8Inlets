@@ -19,7 +19,7 @@ def login():
     return render_template('login.html')
 
 # Route for staff portal after login page
-@app.route('/staff_portal', methods=['POST'])
+@app.route('/staff_portal', methods=['POST','GET'])
 def verify_staff_login():
     if request.method == 'POST':
         staff_id = request.form['staff_id']
@@ -64,3 +64,41 @@ def get_staff_member_data():
         return render_template('onboarding.html', msg=r)
     r= ' '
     return render_template('onboarding.html', msg=r)
+
+# Route to verify member exists in dynamoDB
+@app.route('/sign_out', methods=['POST'])
+def verify_user():
+    if request.method == 'POST':
+        user_id = request.form['user_id']
+
+        table = dynamodb.Table('Members')
+        response = table.query(
+            KeyConditionExpression=Key('Id').eq(user_id)
+        )
+        items = response['Items']
+        print(items)
+        # TODO: Change message and template that's linked
+        if items:
+            user = items[0]
+            return render_template('uncheck_attendance.html', success_message="ID Found!", 
+                user_id=user['Id'], 
+                user_name=user['Name'])
+        else:
+            return render_template('signout_members.html', user_not_found_error="User not found!")
+
+# Route to switch user's attendance status in dynamoDB
+@app.route('/sign-out/checkbox/<user_id>', methods=['POST'])
+def attendance(user_id):
+    if request.method == 'POST':
+        checked = request.form.get('sign-out')
+        if checked:
+            table = dynamodb.Table('Members')
+            response = table.update_item(
+                Key={'Id': user_id},
+                UpdateExpression="set attendance=:t",
+                ExpressionAttributeValues={ ':t': 0 },
+                ReturnValues="UPDATED_NEW"
+            )
+            return render_template('uncheck_attendance.html', success="Sign-out successful!")
+        else:
+            return render_template('uncheck_attendance.html', error="Signout Unsuccessful.")
