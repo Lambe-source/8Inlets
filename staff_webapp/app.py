@@ -76,8 +76,6 @@ def verify_user():
             KeyConditionExpression=Key('Id').eq(user_id)
         )
         items = response['Items']
-        print(items)
-        # TODO: Change message and template that's linked
         if items:
             user = items[0]
             return render_template('uncheck_attendance.html', success_message="ID Found!", 
