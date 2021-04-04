@@ -11,6 +11,7 @@ application = app = Flask(__name__, static_folder='./static')
 app.secret_key = os.urandom(24)
 
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
+sns = boto3.resource('sns', region_name='us-east-1')
 
 # Create a Secrets Manager client
 session = boto3.session.Session()
@@ -22,6 +23,20 @@ get_secret_value_response = client.get_secret_value(
             SecretId="dev/hashing/key1"
 )
 salt = json.loads(get_secret_value_response.get('SecretString')).get('hash_key')
+
+get_secret_value_response = client.get_secret_value(SecretId="dev/sns/key1")
+topic_arn = json.loads(get_secret_value_response.get('SecretString')).get('topic_arn')
+topic = sns.Topic(topic_arn)
+
+def get_capacity():
+    gym_capacity = 10  # arbitrary capacity set for testing - small so that few users are needed to show changes
+    table = dynamodb.Table('Members')
+    response = table.query(
+        IndexName='AttendanceIndex',
+        KeyConditionExpression=Key('attendance').eq(1)
+    )
+    capacity = response['Count'] / gym_capacity
+    return capacity
 
 
 @app.route('/', methods=['GET'])
@@ -68,6 +83,12 @@ def attendance(user_id):
                 ExpressionAttributeValues={ ':t': 1 },
                 ReturnValues="UPDATED_NEW"
             )
+            active = get_capacity()
+            if active == 1:
+                # send email to all staff subscribed to capacity notifications
+                topic.publish(TopicArn=topic_arn, Subject="Gym At Capacity",
+                              Message="Notice: the gym is now at full capacity.")
+
             return render_template('check_in.html', success="Check in successful!")
         else:
             return render_template('check_in.html', user_id=user_id,
@@ -112,15 +133,7 @@ def get_member_data():
 # Route for getting updated capacity - could be done in home page and query each time
 @app.route('/capacity', methods=['GET'])
 def get_active():
-    gym_capacity = 10  # arbitrary capacity set for testing - small so that few users are needed to show changes
-
-    table = dynamodb.Table('Members')
-    response = table.query(
-        IndexName='AttendanceIndex',
-        KeyConditionExpression=Key('attendance').eq(1)
-    )
+    capacity = get_capacity()
     # datetime formatting: https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
     time = datetime.datetime.now().strftime('%b %d, %Y %I:%M:%S %p')
-    capacity = response['Count'] / gym_capacity
-
     return render_template('index.html', capacity=capacity, latest=time)
