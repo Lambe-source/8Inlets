@@ -18,7 +18,7 @@ To run app locally:
   * Click *Save* and the item with be created.
 * Once your table and staff member are made, you are free to use the web app.
 
-####SNS INSTRUCTIONS:
+#### SNS INSTRUCTIONS:
 
 *If you have already set up SNS for the member app, you can skip it here and begin using the app*
 

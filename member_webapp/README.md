@@ -8,7 +8,7 @@ If that doesn't work, try:
 `python -m flask run`
 
 
-DYNAMODB INSTRUCTIONS:
+#### DYNAMODB INSTRUCTIONS:
 
 Log into your AWS Educate profile
 Once you are in your Vocareum Work Bench click Account Details
@@ -36,7 +36,7 @@ Once your table and index are made, you are free to use the web app to add new m
 * Make sure automatic rotation is disabled, if it isn't by default. 
 * Click next, review the secret, then click *Store*
 
-####SNS INSTRUCTIONS:
+#### SNS INSTRUCTIONS:
 
 *If you have already set up SNS for the staff app, you can skip it here and begin using the app*
 
