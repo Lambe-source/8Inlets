@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>Member Signout</title>
+        <link rel="stylesheet" href= "{{ url_for('static',filename='styles.css') }}">
+    </head>
+    <body>
+        <h2>Member Signout</h2>
+        <h3>You are signing out: {{user_name}}</h3>
+        <form method="POST" action="/sign-out/checkbox/{{user_id}}">
+            <label><input name="sign-out" type="checkbox">Signout</label>
+            <br><br>
+            <button type="submit">Submit</button>
+        </form>
+
+        {% if success%}
+            <p class="positive">{{ success }}</p>
+            <br><br>
+        {% endif %}
+
+        <a href="/"><button>Return to Homepage</button></a>
+    </body>
+</html>
