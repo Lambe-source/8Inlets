@@ -1,6 +1,7 @@
 import os
 import boto3
 import uuid
+import json
 from flask import Flask, jsonify, render_template, redirect, request
 from boto3.dynamodb.conditions import Key
 
@@ -8,6 +9,16 @@ app = Flask(__name__, static_folder='./static')
 app.secret_key = os.urandom(24)
 
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
+sns = boto3.resource('sns', region_name='us-east-1')
+
+# Create a Secrets Manager client
+session = boto3.session.Session()
+client = session.client(service_name='secretsmanager', region_name='us-east-1')
+get_secret_value_response = client.get_secret_value(SecretId="dev/sns/key1")
+
+topic_arn = json.loads(get_secret_value_response.get('SecretString')).get('topic_arn')
+topic = sns.Topic(topic_arn)
+
 
 @app.route('/', methods=['GET'])
 def home():
@@ -49,17 +60,18 @@ def signout_redirect():
 @app.route('/get_staff_member_data', methods=['GET', 'POST'])
 def get_staff_member_data():
     if request.method == 'POST':
-        Name = request.form['Name']
-        PhoneNo = request.form['PhoneNo']
+        name = request.form['Name']
+        email = request.form['Email']
         staff_member_id_number = str(uuid.uuid4())
         table = dynamodb.Table('Staff')
         table.put_item( 
                 Item={
                     'Id': staff_member_id_number,
-                    'Name': Name,
-                    'PhoneNo': PhoneNo,
+                    'Name': name,
+                    'Email': email,
                 }
             )
+        topic.subscribe(Protocol="email", Endpoint=email)
         r = ["Success!", "Your staff ID is: " + staff_member_id_number, "Please keep this on hand."]
         return render_template('onboarding.html', msg=r)
     r= ' '
